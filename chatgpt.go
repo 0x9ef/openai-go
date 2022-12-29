@@ -35,20 +35,22 @@ func New(apiKey string) *Engine {
 }
 
 func (e *Engine) newReq(ctx context.Context, method string, url string, body any) (*http.Request, error) {
-	e.n++ // increment number of requests
-	var reader *bytes.Reader
+	if ctx == nil {
+		ctx = context.Background() // prevent nil context error
+	}
+	r := new(bytes.Reader)
 	if body != nil {
 		jsonb, err := json.Marshal(body)
 		if err != nil {
 			return nil, err
 		}
-		reader = bytes.NewReader(jsonb)
+		r = bytes.NewReader(jsonb)
 	}
-	req, err := http.NewRequestWithContext(ctx, method, url, reader)
+	req, err := http.NewRequestWithContext(ctx, method, url, r)
 	if err != nil {
 		return nil, err
 	}
-	// Setup Content-Type header only on POST operation
+	// Setup Content-Type=application/json header only on POST operation
 	if body != nil && method == http.MethodPost {
 		req.Header.Set("Content-type", "application/json")
 	}
@@ -57,6 +59,7 @@ func (e *Engine) newReq(ctx context.Context, method string, url string, body any
 }
 
 func (e *Engine) doReq(req *http.Request) (*http.Response, error) {
+	e.n++ // increment number of requests
 	resp, err := e.client.Do(req)
 	if err != nil {
 		return nil, err
