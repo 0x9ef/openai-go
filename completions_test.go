@@ -15,7 +15,7 @@ func TestCompletion(t *testing.T) {
 	e := New(os.Getenv("OPENAPI_KEY"))
 	r, err := e.Completion(context.Background(), &CompletionOptions{
 		Model:  ModelTextDavinci001,
-		Prompt: "Write a little bit of Wikipedia. What is that?",
+		Prompt: []string{"Write a little bit of Wikipedia. What is that?"},
 	})
 	if err != nil {
 		log.Fatal(err)
