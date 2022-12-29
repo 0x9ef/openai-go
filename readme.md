@@ -1,4 +1,4 @@
-# Golang OpenAI GPT-3 API Client
+# Golang OpenAI API Client
 
 An Golang native implementation to easily interacting with OpenAI API.
 
@@ -11,24 +11,24 @@ export OPENAPI_KEY=YOUR_KEY
 
 To initialize engine, use this:
 ```go
-e := chatgpt.New(os.Getenv("OPENAPI_KEY"))
+e := openai.New(os.Getenv("OPENAPI_KEY"))
 ```
-
+ 
 ### Text completion example 
 Given a prompt, the model will return one or more predicted completions.
-
+ 
 ```go
-e := chatgpt.New(os.Getenv("OPENAPI_KEY"))
-r, err := e.Completion(context.Background(), &chatgpt.CompletionOptions{
+e := openai.New(os.Getenv("OPENAPI_KEY"))
+r, err := e.Completion(context.Background(), &openai.CompletionOptions{
     // Choose model, you can see list of available models in models.go file
-	Model:  chatgpt.ModelTextDavinci001, 
+	Model:  openai.ModelTextDavinci001, 
     // Text to completion
 	Prompt: []string{"Write a little bit of Wikipedia. What is that?"},
 })
 ```
 
 You will get the next output:
-```
+```json
 {
   "id": "cmpl-6SrcYDLCVT7xyHKVNuSLNuhRvwOJ1",
   "object": "text_completion",
@@ -66,14 +66,14 @@ import (
 	"os"
 	"testing"
 
-    "github.com/0x9ef/chatgpt-go"
+    "github.com/0x9ef/openai-go"
 ) 
 
 func main() {
-    e := chatgpt.New(os.Getenv("OPENAPI_KEY"))
-    r, err := e.Completion(context.Background(), &chatgpt.CompletionOptions{
+    e := openai.New(os.Getenv("OPENAPI_KEY"))
+    r, err := e.Completion(context.Background(), &openai.CompletionOptions{
         // Choose model, you can see list of available models in models.go file
-        Model:  chatgpt.ModelTextDavinci001, 
+        Model:  openai.ModelTextDavinci001, 
         // Text to completion
         Prompt: []string{"Write a little bit of Wikipedia. What is that?"}
     })
@@ -93,7 +93,7 @@ func main() {
 Lists the currently available models, and provides basic information about each one such as the owner and availability.
 
 ```go
-e := chatgpt.New(os.Getenv("OPENAPI_KEY"))
+e := openai.New(os.Getenv("OPENAPI_KEY"))
 r, err := e.ListModels(context.Background())
 if err != nil {
 	log.Fatal(err)
@@ -126,15 +126,15 @@ You will get the next output:
     },
     ...
   ]
-} 
+}
 ```
 
 To retrieve information about specified model instead of all models, you can do this:
 
 ```go
-e := chatgpt.New(os.Getenv("OPENAPI_KEY"))
-r, err := e.RetrieveModel(context.Background(), &chatgpt.RetrieveModelOptions{
-		ID: chatgpt.ModelDavinci,
+e := openai.New(os.Getenv("OPENAPI_KEY"))
+r, err := e.RetrieveModel(context.Background(), &openai.RetrieveModelOptions{
+		ID: openai.ModelDavinci,
 	})
 if err != nil {
 	log.Fatal(err)

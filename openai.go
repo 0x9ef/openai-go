@@ -1,7 +1,7 @@
 // Copyright (c) 2022 0x9ef. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-package chatgpt
+package openai
 
 import (
 	"bytes"

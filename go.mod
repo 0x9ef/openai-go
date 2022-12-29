@@ -1,4 +1,4 @@
-module github.com/0x9ef/chatgpt-go
+module github.com/0x9ef/openai-go
 
 go 1.19
 
