@@ -8,6 +8,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
@@ -34,27 +35,25 @@ func New(apiKey string) *Engine {
 	return e
 }
 
-func (e *Engine) newReq(ctx context.Context, method string, url string, body any) (*http.Request, error) {
+func (e *Engine) newReq(ctx context.Context, method string, uri string, postType string, body io.Reader) (*http.Request, error) {
 	if ctx == nil {
 		ctx = context.Background() // prevent nil context error
 	}
-	r := new(bytes.Reader)
-	if body != nil {
-		jsonb, err := json.Marshal(body)
-		if err != nil {
-			return nil, err
-		}
-		r = bytes.NewReader(jsonb)
+	if body == nil {
+		body = new(bytes.Reader) // prevent nil body error
 	}
-	req, err := http.NewRequestWithContext(ctx, method, url, r)
+	req, err := http.NewRequestWithContext(ctx, method, uri, body)
 	if err != nil {
 		return nil, err
 	}
-	// Setup Content-Type=application/json header only on POST operation
-	if body != nil && method == http.MethodPost {
-		req.Header.Set("Content-type", "application/json")
-	}
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", e.apiKey))
+	// Setup Content-Type depends on postType
+	switch {
+	case body != nil && postType == "json":
+		req.Header.Set("Content-type", "application/json")
+	case body != nil && postType == "formData":
+		req.Header.Set("Content-type", "application/x-www-form-urlencoded")
+	}
 	return req, err
 }
 
@@ -87,4 +86,12 @@ func unmarshal(resp *http.Response, v any) error {
 		return err
 	}
 	return nil
+}
+
+func marshalJson(body any) (io.Reader, error) {
+	b, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	return bytes.NewReader(b), nil
 }

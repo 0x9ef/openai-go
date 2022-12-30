@@ -52,8 +52,12 @@ func (e *Engine) Completion(ctx context.Context, opts *CompletionOptions) (*Comp
 	if err := e.validate.StructCtx(ctx, opts); err != nil {
 		return nil, err
 	}
-	url := e.apiBaseURL + "/completions"
-	req, err := e.newReq(ctx, http.MethodPost, url, opts)
+	uri := e.apiBaseURL + "/completions"
+	r, err := marshalJson(opts)
+	if err != nil {
+		return nil, err
+	}
+	req, err := e.newReq(ctx, http.MethodPost, uri, "json", r)
 	if err != nil {
 		return nil, err
 	}

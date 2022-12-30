@@ -12,7 +12,7 @@ import (
 )
 
 func TestListModels(t *testing.T) {
-	e := New(os.Getenv("OPENAPI_KEY"))
+	e := New(os.Getenv("OPENAI_KEY"))
 	r, err := e.ListModels(context.Background())
 	if err != nil {
 		log.Fatal(err)
@@ -25,7 +25,7 @@ func TestListModels(t *testing.T) {
 }
 
 func TestRetrieveModel(t *testing.T) {
-	e := New(os.Getenv("OPENAPI_KEY"))
+	e := New(os.Getenv("OPENAI_KEY"))
 	r, err := e.RetrieveModel(context.Background(), &RetrieveModelOptions{
 		ID: ModelDavinci,
 	})

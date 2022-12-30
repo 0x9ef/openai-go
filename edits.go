@@ -47,7 +47,11 @@ func (e *Engine) Edit(ctx context.Context, opts *EditOptions) (*EditResponse, er
 		return nil, err
 	}
 	url := e.apiBaseURL + "/edits"
-	req, err := e.newReq(ctx, http.MethodPost, url, opts)
+	r, err := marshalJson(opts)
+	if err != nil {
+		return nil, err
+	}
+	req, err := e.newReq(ctx, http.MethodPost, url, "json", r)
 	if err != nil {
 		return nil, err
 	}

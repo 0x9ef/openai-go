@@ -12,7 +12,7 @@ import (
 )
 
 func TestEdits(t *testing.T) {
-	e := New(os.Getenv("OPENAPI_KEY"))
+	e := New(os.Getenv("OPENAI_KEY"))
 	r, err := e.Edit(context.Background(), &EditOptions{
 		Model:       ModelTextDavinci001,
 		Input:       "Write a little bit of Wikipedia. What is that?",

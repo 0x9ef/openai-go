@@ -41,7 +41,7 @@ type ListModelsResponse struct {
 // Docs: https://beta.openai.com/docs/api-reference/models/list
 func (e *Engine) ListModels(ctx context.Context) (*ListModelsResponse, error) {
 	url := e.apiBaseURL + "/models"
-	req, err := e.newReq(ctx, http.MethodGet, url, nil)
+	req, err := e.newReq(ctx, http.MethodGet, url, "", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (e *Engine) RetrieveModel(ctx context.Context, opts *RetrieveModelOptions) 
 		return nil, err
 	}
 	url := e.apiBaseURL + "/models/" + string(opts.ID)
-	req, err := e.newReq(ctx, http.MethodGet, url, nil)
+	req, err := e.newReq(ctx, http.MethodGet, url, "", nil)
 	if err != nil {
 		return nil, err
 	}

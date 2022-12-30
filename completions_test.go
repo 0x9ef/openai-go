@@ -12,7 +12,7 @@ import (
 )
 
 func TestCompletion(t *testing.T) {
-	e := New(os.Getenv("OPENAPI_KEY"))
+	e := New(os.Getenv("OPENAI_KEY"))
 	r, err := e.Completion(context.Background(), &CompletionOptions{
 		Model:  ModelTextDavinci001,
 		Prompt: []string{"Write a little bit of Wikipedia. What is that?"},
