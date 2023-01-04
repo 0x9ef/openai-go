@@ -1,6 +1,7 @@
 # Golang OpenAI API Client
 
 An Golang native implementation to easily interacting with OpenAI API.
+
 https://beta.openai.com/docs/api-reference/
 
 ## Usage
@@ -23,22 +24,22 @@ If you want to use the most powerful model to generate text outputs, ensure that
 #### Text edition
 You can use the bundle Completion+Edit to regenerate the response based on the last context.
 ```go
-	e := openai.New(os.Getenv("OPENAI_KEY"))
-	ctx := context.Background()
-	completionResp, err := e.Completion(ctx, &openai.CompletionOptions{
-		// Choose model, you can see list of available models in models.go file
-		Model: openai.ModelTextDavinci001,
-		// Number of completion tokens to generate response. By default - 1024
-		MaxTokens: 1200,
-		// Text to completion
-		Prompt: []string{"Write a little bit of Wikipedia. What is that?"},
-	})
+e := openai.New(os.Getenv("OPENAI_KEY"))
+ctx := context.Background()
+completionResp, err := e.Completion(ctx, &openai.CompletionOptions{
+	// Choose model, you can see list of available models in models.go file
+	Model: openai.ModelTextDavinci001,
+	// Number of completion tokens to generate response. By default - 1024
+	MaxTokens: 1200,
+	// Text to completion
+	Prompt: []string{"Write a little bit of Wikipedia. What is that?"},
+})
 
-	editResp, err := e.Edit(ctx, &EditOptions{
-		Model:       ModelTextDavinci001,
-		Input:       completionResp.Choices[0],
-		Instruction: "Please rewrite a bit more and add more information about Wikipedia in different aspects. Please build based on that for 4 topics",
-	})
+editResp, err := e.Edit(ctx, &EditOptions{
+	Model:       ModelTextDavinci001,
+	Input:       completionResp.Choices[0],
+	Instruction: "Please rewrite a bit more and add more information about Wikipedia in different aspects. Please build based on that for 4 topics",
+})
 ```
 
 ### Text completion example 
@@ -47,15 +48,15 @@ Given a prompt, the model will return one or more predicted completions.
 **Note**: the default number of completion tokens is 1024, if you want to increase or decrease this limit, you should change `MaxTokens` parameter. 
  
 ```go
-	e := openai.New(os.Getenv("OPENAI_KEY"))
-	r, err := e.Completion(context.Background(), &openai.CompletionOptions{
-		// Choose model, you can see list of available models in models.go file
-		Model: openai.ModelTextDavinci001,
-		// Number of completion tokens to generate response. By default - 1024
-		MaxTokens: 1200,
-		// Text to completion
-		Prompt: []string{"Write a little bit of Wikipedia. What is that?"},
-	})
+e := openai.New(os.Getenv("OPENAI_KEY"))
+r, err := e.Completion(context.Background(), &openai.CompletionOptions{
+	// Choose model, you can see list of available models in models.go file
+	Model: openai.ModelTextDavinci001,
+	// Number of completion tokens to generate response. By default - 1024
+	MaxTokens: 1200,
+	// Text to completion
+	Prompt: []string{"Write a little bit of Wikipedia. What is that?"},
+})
 ```
 
 You will get the next output:
@@ -162,13 +163,13 @@ You will get the next output:
 To retrieve information about specified model instead of all models, you can do this:
 
 ```go
-	e := openai.New(os.Getenv("OPENAI_KEY"))
-	r, err := e.RetrieveModel(context.Background(), &openai.RetrieveModelOptions{
-		ID: openai.ModelDavinci,
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
+e := openai.New(os.Getenv("OPENAI_KEY"))
+r, err := e.RetrieveModel(context.Background(), &openai.RetrieveModelOptions{
+	ID: openai.ModelDavinci,
+})
+if err != nil {
+	log.Fatal(err)
+}
 ```
 
 ## License
