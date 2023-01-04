@@ -11,17 +11,20 @@ import (
 	"strings"
 )
 
+// Size represents X*Y size wide of image.
 type Size string
 
 const (
 	Size256    = "256x256"
-	Size612    = "512x512"
+	Size512    = "512x512"
 	Size1024   = "1024x1024"
 	SizeSmall  = Size256
-	SizeMedium = Size612
+	SizeMedium = Size512
 	SizeBig    = Size1024
 )
 
+// ResponseFormat represents image format of response.
+// It can be encoded as URL, or with base64+json.
 type ResponseFormat string
 
 const (
@@ -52,7 +55,7 @@ type ImageCreateResponse struct {
 // ImageCreate given a prompt and/or an input image, the model will generate a new image.
 //
 // Docs: https://beta.openai.com/docs/api-reference/images/create
-func (e *Engine) ImageCreate(ctx context.Context, opts *ImageCreateOptions) (*ImageCreateResponse, error) {
+func (e *engine) ImageCreate(ctx context.Context, opts *ImageCreateOptions) (*ImageCreateResponse, error) {
 	if err := e.validate.StructCtx(ctx, opts); err != nil {
 		return nil, err
 	}
@@ -113,7 +116,7 @@ type ImageEditResponse struct {
 // ImageEdit creates an edited or extended image given an original image and a prompt.
 //
 // Docs: https://beta.openai.com/docs/api-reference/images/create-edit
-func (e *Engine) ImageEdit(ctx context.Context, opts *ImageEditOptions) (*ImageEditResponse, error) {
+func (e *engine) ImageEdit(ctx context.Context, opts *ImageEditOptions) (*ImageEditResponse, error) {
 	if err := e.validate.StructCtx(ctx, opts); err != nil {
 		return nil, err
 	}
@@ -175,7 +178,7 @@ type ImageVariationResponse struct {
 // ImageVariation creates a variation of a given image.
 //
 // Docs: https://beta.openai.com/docs/api-reference/images/create-variation
-func (e *Engine) ImageVariation(ctx context.Context, opts *ImageVariationOptions) (*ImageCreateResponse, error) {
+func (e *engine) ImageVariation(ctx context.Context, opts *ImageVariationOptions) (*ImageCreateResponse, error) {
 	if err := e.validate.StructCtx(ctx, opts); err != nil {
 		return nil, err
 	}

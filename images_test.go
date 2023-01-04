@@ -14,7 +14,7 @@ import (
 func TestImageCreate(t *testing.T) {
 	e := New(os.Getenv("OPENAI_KEY"))
 	r, err := e.ImageCreate(context.Background(), &ImageCreateOptions{
-		Prompt: "Write a little bit of Wikipedia. What is that?",
+		Prompt: "Future human",
 		Size:   SizeSmall,
 	})
 	if err != nil {

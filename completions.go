@@ -47,12 +47,16 @@ type CompletionResponse struct {
 // Completion given a prompt, the model will return one or more predicted completions,
 // and can also return the probabilities of alternative tokens at each position.
 //
+// The default number of tokens to complete is 1024.
 // Docs: https://beta.openai.com/docs/api-reference/completions
-func (e *Engine) Completion(ctx context.Context, opts *CompletionOptions) (*CompletionResponse, error) {
+func (e *engine) Completion(ctx context.Context, opts *CompletionOptions) (*CompletionResponse, error) {
 	if err := e.validate.StructCtx(ctx, opts); err != nil {
 		return nil, err
 	}
 	uri := e.apiBaseURL + "/completions"
+	if opts.MaxTokens == 0 {
+		opts.MaxTokens = defaultMaxTokens
+	}
 	r, err := marshalJson(opts)
 	if err != nil {
 		return nil, err

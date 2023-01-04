@@ -14,16 +14,22 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-type Engine struct {
-	apiKey     string
-	apiBaseURL string
-	client     *http.Client
-	validate   *validator.Validate
-	n          int
+type engine struct {
+	apiKey         string
+	apiBaseURL     string
+	organizationId string
+	client         *http.Client
+	validate       *validator.Validate
+	n              int
 }
 
-func New(apiKey string) *Engine {
-	e := &Engine{
+const (
+	defaultMaxTokens = 1024
+)
+
+// New is used to initialize engine.
+func New(apiKey string) *engine {
+	e := &engine{
 		apiKey:     apiKey,
 		apiBaseURL: "https://api.openai.com/v1",
 		client:     &http.Client{},
@@ -35,7 +41,17 @@ func New(apiKey string) *Engine {
 	return e
 }
 
-func (e *Engine) newReq(ctx context.Context, method string, uri string, postType string, body io.Reader) (*http.Request, error) {
+// SetApiKey is used to set API key to access OpenAI API.
+func (e *engine) SetApiKey(apiKey string) {
+	e.apiKey = apiKey
+}
+
+// SetOrganizationId is used to set organization ID if user belongs to multiple organizations.
+func (e *engine) SetOrganizationId(organizationId string) {
+	e.organizationId = organizationId
+}
+
+func (e *engine) newReq(ctx context.Context, method string, uri string, postType string, body io.Reader) (*http.Request, error) {
 	if ctx == nil {
 		ctx = context.Background() // prevent nil context error
 	}
@@ -47,6 +63,9 @@ func (e *Engine) newReq(ctx context.Context, method string, uri string, postType
 		return nil, err
 	}
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", e.apiKey))
+	if len(e.organizationId) != 0 {
+		req.Header.Set("OpenAI-Organization", e.organizationId)
+	}
 	// Setup Content-Type depends on postType
 	switch {
 	case body != nil && postType == "json":
@@ -57,7 +76,7 @@ func (e *Engine) newReq(ctx context.Context, method string, uri string, postType
 	return req, err
 }
 
-func (e *Engine) doReq(req *http.Request) (*http.Response, error) {
+func (e *engine) doReq(req *http.Request) (*http.Response, error) {
 	e.n++ // increment number of requests
 	resp, err := e.client.Do(req)
 	if err != nil {
