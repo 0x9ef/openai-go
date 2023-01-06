@@ -49,7 +49,7 @@ type CompletionResponse struct {
 //
 // The default number of tokens to complete is 1024.
 // Docs: https://beta.openai.com/docs/api-reference/completions
-func (e *engine) Completion(ctx context.Context, opts *CompletionOptions) (*CompletionResponse, error) {
+func (e *Engine) Completion(ctx context.Context, opts *CompletionOptions) (*CompletionResponse, error) {
 	if err := e.validate.StructCtx(ctx, opts); err != nil {
 		return nil, err
 	}

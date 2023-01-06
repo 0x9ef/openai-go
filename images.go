@@ -55,7 +55,7 @@ type ImageCreateResponse struct {
 // ImageCreate given a prompt and/or an input image, the model will generate a new image.
 //
 // Docs: https://beta.openai.com/docs/api-reference/images/create
-func (e *engine) ImageCreate(ctx context.Context, opts *ImageCreateOptions) (*ImageCreateResponse, error) {
+func (e *Engine) ImageCreate(ctx context.Context, opts *ImageCreateOptions) (*ImageCreateResponse, error) {
 	if err := e.validate.StructCtx(ctx, opts); err != nil {
 		return nil, err
 	}
@@ -116,7 +116,7 @@ type ImageEditResponse struct {
 // ImageEdit creates an edited or extended image given an original image and a prompt.
 //
 // Docs: https://beta.openai.com/docs/api-reference/images/create-edit
-func (e *engine) ImageEdit(ctx context.Context, opts *ImageEditOptions) (*ImageEditResponse, error) {
+func (e *Engine) ImageEdit(ctx context.Context, opts *ImageEditOptions) (*ImageEditResponse, error) {
 	if err := e.validate.StructCtx(ctx, opts); err != nil {
 		return nil, err
 	}
@@ -178,7 +178,7 @@ type ImageVariationResponse struct {
 // ImageVariation creates a variation of a given image.
 //
 // Docs: https://beta.openai.com/docs/api-reference/images/create-variation
-func (e *engine) ImageVariation(ctx context.Context, opts *ImageVariationOptions) (*ImageCreateResponse, error) {
+func (e *Engine) ImageVariation(ctx context.Context, opts *ImageVariationOptions) (*ImageCreateResponse, error) {
 	if err := e.validate.StructCtx(ctx, opts); err != nil {
 		return nil, err
 	}
