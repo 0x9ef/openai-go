@@ -42,7 +42,7 @@ type EditResponse struct {
 // Edit given a prompt and an instruction, the model will return an edited version of the prompt.
 //
 // Docs: https://beta.openai.com/docs/api-reference/edits
-func (e *engine) Edit(ctx context.Context, opts *EditOptions) (*EditResponse, error) {
+func (e *Engine) Edit(ctx context.Context, opts *EditOptions) (*EditResponse, error) {
 	if err := e.validate.StructCtx(ctx, opts); err != nil {
 		return nil, err
 	}

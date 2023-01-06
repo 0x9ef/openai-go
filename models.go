@@ -39,7 +39,7 @@ type ListModelsResponse struct {
 // each one such as the owner and availability.
 //
 // Docs: https://beta.openai.com/docs/api-reference/models/list
-func (e *engine) ListModels(ctx context.Context) (*ListModelsResponse, error) {
+func (e *Engine) ListModels(ctx context.Context) (*ListModelsResponse, error) {
 	url := e.apiBaseURL + "/models"
 	req, err := e.newReq(ctx, http.MethodGet, url, "", nil)
 	if err != nil {
@@ -71,7 +71,7 @@ type RetrieveModelResponse struct {
 // about the model such as the owner and permissioning.
 //
 // Docs: https://beta.openai.com/docs/api-reference/models/retrieve
-func (e *engine) RetrieveModel(ctx context.Context, opts *RetrieveModelOptions) (*RetrieveModelResponse, error) {
+func (e *Engine) RetrieveModel(ctx context.Context, opts *RetrieveModelOptions) (*RetrieveModelResponse, error) {
 	if err := e.validate.StructCtx(ctx, opts); err != nil {
 		return nil, err
 	}
