@@ -20,7 +20,7 @@ type EditOptions struct {
 	N int `json:"n,omitempty"`
 	// What sampling temperature to use. Higher values means the model will take more risks.
 	// Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.
-	Temperature int `json:"temperature,omitempty"`
+	Temperature float32 `json:"temperature,omitempty"`
 }
 
 type EditResponse struct {

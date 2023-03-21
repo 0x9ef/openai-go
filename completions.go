@@ -19,7 +19,7 @@ type CompletionOptions struct {
 	MaxTokens int `json:"max_tokens,omitempty" binding:"omitempty,max=4096"`
 	// What sampling temperature to use. Higher values means the model will take more risks.
 	// Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.
-	Temperature int `json:"temperature,omitempty"`
+	Temperature float32 `json:"temperature,omitempty"`
 	// How many completions to generate for each prompt.
 	N int `json:"n,omitempty"`
 	// Up to 4 sequences where the API will stop generating further tokens.
