@@ -27,7 +27,7 @@ func TestListModels(t *testing.T) {
 func TestRetrieveModel(t *testing.T) {
 	e := New(os.Getenv("OPENAI_KEY"))
 	r, err := e.RetrieveModel(context.Background(), &RetrieveModelOptions{
-		ID: ModelDavinci,
+		ID: DefaultModel,
 	})
 	if err != nil {
 		log.Fatal(err)
