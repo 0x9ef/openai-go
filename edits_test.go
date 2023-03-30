@@ -14,7 +14,7 @@ import (
 func TestEdits(t *testing.T) {
 	e := New(os.Getenv("OPENAI_KEY"))
 	r, err := e.Edit(context.Background(), &EditOptions{
-		Model:       DefaultModel,
+		Model:       "text-davinci-edit-001", // works only with this model
 		Input:       "Write a little bit of Wikipedia. What is that?",
 		Instruction: "Write huge text about Wikipedia in education format.",
 	})

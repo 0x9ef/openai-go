@@ -41,6 +41,9 @@ type EditResponse struct {
 
 // Edit given a prompt and an instruction, the model will return an edited version of the prompt.
 //
+// Pay attention! This works only with text-davinci-edit-001
+// See issue: https://community.openai.com/t/is-edit-endpoint-documentation-incorrect/23361/10
+//
 // Docs: https://beta.openai.com/docs/api-reference/edits
 func (e *Engine) Edit(ctx context.Context, opts *EditOptions) (*EditResponse, error) {
 	if err := e.validate.StructCtx(ctx, opts); err != nil {
