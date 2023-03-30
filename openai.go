@@ -99,7 +99,7 @@ func (e *Engine) doReq(req *http.Request) (*http.Response, error) {
 	return resp, apiErr
 }
 
-func unmarshal(resp *http.Response, v any) error {
+func unmarshal(resp *http.Response, v interface{}) error {
 	defer resp.Body.Close()
 	if err := json.NewDecoder(resp.Body).Decode(&v); err != nil {
 		return err
@@ -107,7 +107,7 @@ func unmarshal(resp *http.Response, v any) error {
 	return nil
 }
 
-func marshalJson(body any) (io.Reader, error) {
+func marshalJson(body interface{}) (io.Reader, error) {
 	b, err := json.Marshal(body)
 	if err != nil {
 		return nil, err

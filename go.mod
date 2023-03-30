@@ -1,6 +1,6 @@
 module github.com/0x9ef/openai-go
 
-go 1.19
+go 1.17
 
 require github.com/go-playground/validator/v10 v10.11.1
 
