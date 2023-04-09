@@ -67,6 +67,16 @@ const (
 	ModelGPT40314    Model = "gpt-4-0314"
 )
 
+// ModelWhisper is a general-purpose speech recognition model.
+// It is trained on a large dataset of diverse audio and is also a multi-task model that can perform multilingual
+// speech recognition as well as speech translation and language identification. The Whisper v2-large model is
+// currently available through our API with the whisper-1 model name.
+//
+// Learn more: https://platform.openai.com/docs/models/whisper
+const (
+	ModelWhisper Model = "whisper-1"
+)
+
 type ListModelsResponse struct {
 	Data []struct {
 		ID      Model  `json:"id"`
