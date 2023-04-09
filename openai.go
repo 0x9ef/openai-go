@@ -72,6 +72,8 @@ func (e *Engine) newReq(ctx context.Context, method string, uri string, postType
 		req.Header.Set("Content-type", "application/json")
 	case body != nil && postType == "formData":
 		req.Header.Set("Content-type", "application/x-www-form-urlencoded")
+	case body != nil:
+		req.Header.Set("Content-type", postType)
 	}
 	return req, err
 }
